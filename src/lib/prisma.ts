@@ -7,16 +7,16 @@ const isPostgres = databaseUrl.startsWith("postgres");
 let prismaClient: PrismaClient;
 
 if (isPostgres) {
-  // PostgreSQL for production - use POSTGRES_PRISMA_URL for better pooling
+  // PostgreSQL for production - use non-pooling URL for build, pooled for runtime
   const { PrismaNeon } = require("@prisma/adapter-neon");
   const { Pool, neonConfig } = require("@neondatabase/serverless");
 
-  // Use fetch for build-time to avoid WebSocket issues
-  if (process.env.NODE_ENV === "production" && typeof WebSocket === "undefined") {
-    neonConfig.webSocketConstructor = require("ws");
-  }
+  // Disable WebSocket - use HTTP fetch instead
+  neonConfig.useSecureWebSocket = false;
+  neonConfig.pipelineConnect = false;
 
-  const connectionString = process.env.POSTGRES_PRISMA_URL || databaseUrl;
+  // Use non-pooling URL for more reliable build-time connections
+  const connectionString = process.env.POSTGRES_URL_NON_POOLING || process.env.POSTGRES_PRISMA_URL || databaseUrl;
   const pool = new Pool({ connectionString });
   const adapter = new PrismaNeon(pool);
   prismaClient = new PrismaClient({ adapter });
