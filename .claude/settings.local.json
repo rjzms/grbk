@@ -23,7 +23,10 @@
       "Bash(ipconfig)",
       "Bash(vercel --version)",
       "Bash(git commit -m 'feat: auto-run database migrations on build *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git commit -m 'fix: run migrations before build *)",
+      "Bash(curl -s \"https://vercel.com/ym-s-projects9/grbk/AKD2Ao6zPXcpdCTny7QfDzURxQEk\")",
+      "Bash(git commit -m 'fix: add migration lock file *)"
     ]
   }
 }
