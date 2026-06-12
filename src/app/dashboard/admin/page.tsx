@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
-import { verifySession } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminPage() {
-  const session = await verifySession();
-  if (!session) {
+  const session = await getSession();
+  if (!session.userId) {
     redirect("/login");
   }
 
