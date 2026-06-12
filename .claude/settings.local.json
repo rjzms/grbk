@@ -37,7 +37,12 @@
       "Bash(vercel logs *)",
       "Bash(vercel inspect *)",
       "Bash(npm run *)",
-      "Bash(git commit -m 'fix: force dynamic rendering for admin page *)"
+      "Bash(git commit -m 'fix: force dynamic rendering for admin page *)",
+      "Bash(git commit -m 'fix: add dynamic rendering exports *)",
+      "Bash(git commit -m 'fix: use getSession instead of verifySession *)",
+      "Bash(git commit -m 'fix: use correct Prisma import in create-admin script *)",
+      "Bash(git commit -m 'fix: update Prisma import *)",
+      "Bash(git commit -m 'fix: exclude scripts from TypeScript checking *)"
     ]
   }
 }
