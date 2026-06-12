@@ -7,10 +7,11 @@ const isPostgres = databaseUrl.startsWith("postgres");
 let prismaClient: PrismaClient;
 
 if (isPostgres) {
-  // PostgreSQL for production
+  // PostgreSQL for production - use POSTGRES_PRISMA_URL for better pooling
   const { PrismaNeon } = require("@prisma/adapter-neon");
   const { Pool } = require("@neondatabase/serverless");
-  const pool = new Pool({ connectionString: databaseUrl });
+  const connectionString = process.env.POSTGRES_PRISMA_URL || databaseUrl;
+  const pool = new Pool({ connectionString });
   const adapter = new PrismaNeon(pool);
   prismaClient = new PrismaClient({ adapter });
 } else {
