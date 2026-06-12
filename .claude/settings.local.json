@@ -21,7 +21,9 @@
       "Bash(git commit -m 'chore: final build passes — 37 static pages, zero errors after script tag fix *)",
       "Bash(gh --version)",
       "Bash(ipconfig)",
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(git commit -m 'feat: auto-run database migrations on build *)",
+      "Bash(git push *)"
     ]
   }
 }
