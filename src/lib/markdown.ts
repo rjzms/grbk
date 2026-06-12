@@ -22,8 +22,13 @@ export async function renderMarkdown(content: string): Promise<string> {
 
   const html = String(result);
 
+  // 移除 rehype-pretty-code 生成的 <script> 标签
+  // 这些 script 标签仅用于代码块的行号高亮逻辑，在 dangerouslySetInnerHTML 中不执行
+  // 在 React 中会触发 "Encountered a script tag" 告警，需要移除
+  const cleanedHtml = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
+
   // 安全清理：移除 XSS 向量但保留代码高亮产生的 HTML
-  return DOMPurify.sanitize(html, {
+  return DOMPurify.sanitize(cleanedHtml, {
     ALLOWED_TAGS: [
       "h1", "h2", "h3", "h4", "h5", "h6",
       "p", "br", "hr",
@@ -33,14 +38,14 @@ export async function renderMarkdown(content: string): Promise<string> {
       "a", "em", "strong", "del", "ins",
       "img", "table", "thead", "tbody", "tr", "th", "td",
       "span", "div", "figure", "figcaption",
-      "input", // for task lists
+      "input",
     ],
     ALLOWED_ATTR: [
       "href", "src", "alt", "title", "target", "rel",
       "class", "id",
       "data-line", "data-language", "data-theme",
       "style",
-      "type", "checked", "disabled", // for task lists
+      "type", "checked", "disabled",
     ],
     ALLOW_DATA_ATTR: true,
   });
@@ -50,10 +55,10 @@ export function generateSlug(title: string): string {
   return title
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, "") // 移除特殊字符
-    .replace(/[\s_]+/g, "-") // 空格和下划线替换为连字符
-    .replace(/-+/g, "-") // 合并连字符
-    .replace(/^-|-$/g, "") // 移除首尾连字符
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
     .substring(0, 100);
 }
 
