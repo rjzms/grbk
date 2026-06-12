@@ -18,7 +18,10 @@
       "Bash(git commit -m 'feat: initial commit — grbk personal blog *)",
       "Bash(pwd && echo \"===\" && ls -la 2>&1 && echo \"=== 检查是否有文件泄漏到上级目录 ===\" && ls -la ../ 2>/dev/null | grep -v \"\\\\.\\\\.\")",
       "Bash(git commit -m 'fix: remove rehype-pretty-code script tags from markdown output *)",
-      "Bash(git commit -m 'chore: final build passes — 37 static pages, zero errors after script tag fix *)"
+      "Bash(git commit -m 'chore: final build passes — 37 static pages, zero errors after script tag fix *)",
+      "Bash(gh --version)",
+      "Bash(ipconfig)",
+      "Bash(vercel --version)"
     ]
   }
 }
