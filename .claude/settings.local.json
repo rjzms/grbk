@@ -26,7 +26,12 @@
       "Bash(git push *)",
       "Bash(git commit -m 'fix: run migrations before build *)",
       "Bash(curl -s \"https://vercel.com/ym-s-projects9/grbk/AKD2Ao6zPXcpdCTny7QfDzURxQEk\")",
-      "Bash(git commit -m 'fix: add migration lock file *)"
+      "Bash(git commit -m 'fix: add migration lock file *)",
+      "Bash(curl -s https://grbk-mauve.vercel.app/ -I)",
+      "Bash(vercel ls *)",
+      "Bash(git commit -m 'fix: use vercel-build script for migrations *)",
+      "Bash(git commit -m 'fix: add vercel-build script *)",
+      "Bash(git commit -m 'fix: resolve failed migration before deploy *)"
     ]
   }
 }
