@@ -12,12 +12,14 @@ interface Props {
   searchParams: Promise<{ page?: string }>;
 }
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-export async function generateStaticParams() {
-  const tags = await prisma.tag.findMany({ select: { slug: true } });
-  return tags.map((t) => ({ tag: t.slug }));
-}
+// Disabled for now to avoid build-time database access
+// export async function generateStaticParams() {
+//   const tags = await prisma.tag.findMany({ select: { slug: true } });
+//   return tags.map((t) => ({ tag: t.slug }));
+// }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tag: slug } = await params;
