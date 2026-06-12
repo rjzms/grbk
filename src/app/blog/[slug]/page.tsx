@@ -13,13 +13,14 @@ interface Props {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { status: "PUBLISHED" },
-    select: { slug: true },
-  });
-  return posts.map((p) => ({ slug: p.slug }));
-}
+// Disabled for now to avoid build-time database access
+// export async function generateStaticParams() {
+//   const posts = await prisma.post.findMany({
+//     where: { status: "PUBLISHED" },
+//     select: { slug: true },
+//   });
+//   return posts.map((p) => ({ slug: p.slug }));
+// }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
