@@ -31,7 +31,8 @@
       "Bash(vercel ls *)",
       "Bash(git commit -m 'fix: use vercel-build script for migrations *)",
       "Bash(git commit -m 'fix: add vercel-build script *)",
-      "Bash(git commit -m 'fix: resolve failed migration before deploy *)"
+      "Bash(git commit -m 'fix: resolve failed migration before deploy *)",
+      "Bash(git commit -m 'fix: use db push as fallback for failed migrations *)"
     ]
   }
 }

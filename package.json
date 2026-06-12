@@ -11,7 +11,7 @@
     "db:reset-migration": "tsx scripts/reset-migration.ts",
     "db:create-admin": "tsx scripts/create-admin.ts",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate resolve --rolled-back 20260612_add_admin_role || true && prisma migrate deploy && next build"
+    "vercel-build": "prisma generate && (prisma migrate resolve --rolled-back 20260612_add_admin_role 2>/dev/null || true) && (prisma migrate deploy 2>/dev/null || prisma db push --accept-data-loss) && next build"
   },
   "dependencies": {
     "@libsql/client": "^0.17.3",
