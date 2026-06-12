@@ -5,8 +5,8 @@ import type { PostSummary } from "@/types";
 import { Pagination } from "@/components/blog/pagination";
 import { POSTS_PER_PAGE } from "@/lib/constants";
 
-export const dynamic = "force-static";
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function BlogListPage({
   searchParams,

@@ -5,8 +5,8 @@ import { ArrowRight } from "lucide-react";
 import type { PostSummary } from "@/types";
 import { postToSummary } from "@/lib/post-utils";
 
-export const dynamic = "force-static";
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function HomePage() {
   const posts = await prisma.post.findMany({
