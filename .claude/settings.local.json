@@ -32,7 +32,12 @@
       "Bash(git commit -m 'fix: use vercel-build script for migrations *)",
       "Bash(git commit -m 'fix: add vercel-build script *)",
       "Bash(git commit -m 'fix: resolve failed migration before deploy *)",
-      "Bash(git commit -m 'fix: use db push as fallback for failed migrations *)"
+      "Bash(git commit -m 'fix: use db push as fallback for failed migrations *)",
+      "Bash(git commit -m 'fix: update vercel-build with db push fallback *)",
+      "Bash(vercel logs *)",
+      "Bash(vercel inspect *)",
+      "Bash(npm run *)",
+      "Bash(git commit -m 'fix: force dynamic rendering for admin page *)"
     ]
   }
 }
