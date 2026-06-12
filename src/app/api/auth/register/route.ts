@@ -21,56 +21,30 @@ export async function POST(request: NextRequest) {
 
     const { email, username, password } = parsed.data;
 
-    // 2. 在事务中检查用户总数并创建用户（防止并发超限）
-    const result = await prisma.$transaction(async (tx) => {
-      // 检查邮箱是否已注册
-      const existingEmail = await tx.user.findUnique({ where: { email } });
-      if (existingEmail) {
-        return { type: "email-exists" as const };
-      }
-
-      // 检查用户名是否已占用
-      const existingUsername = await tx.user.findUnique({
-        where: { username },
-      });
-      if (existingUsername) {
-        return { type: "username-exists" as const };
-      }
-
-      // 原子计数
-      const userCount = await tx.user.count();
-      if (userCount >= MAX_USERS) {
-        return { type: "max-users" as const };
-      }
-
-      // 创建用户
-      const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
-      const user = await tx.user.create({
-        data: {
-          email,
-          username,
-          password: hashedPassword,
-        },
-      });
-
-      return { type: "success" as const, user };
-    });
-
-    if (result.type === "email-exists") {
+    // 2. 检查并创建用户（不使用事务，Neon WebSocket 不支持）
+    // 检查邮箱是否已注册
+    const existingEmail = await prisma.user.findUnique({ where: { email } });
+    if (existingEmail) {
       return NextResponse.json(
         { success: false, error: "该邮箱已被注册" },
         { status: 409 },
       );
     }
 
-    if (result.type === "username-exists") {
+    // 检查用户名是否已占用
+    const existingUsername = await prisma.user.findUnique({
+      where: { username },
+    });
+    if (existingUsername) {
       return NextResponse.json(
         { success: false, error: "该用户名已被占用" },
         { status: 409 },
       );
     }
 
-    if (result.type === "max-users") {
+    // 检查用户总数
+    const userCount = await prisma.user.count();
+    if (userCount >= MAX_USERS) {
       return NextResponse.json(
         {
           success: false,
@@ -80,16 +54,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 创建用户
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
+    const user = await prisma.user.create({
+      data: {
+        email,
+        username,
+        password: hashedPassword,
+      },
+    });
+
     // 3. 创建 Session
-    await createSession(result.user.id, result.user.username);
+    await createSession(user.id, user.username);
 
     return NextResponse.json(
       {
         success: true,
         data: {
-          id: result.user.id,
-          username: result.user.username,
-          email: result.user.email,
+          id: user.id,
+          username: user.username,
+          email: user.email,
         },
       },
       { status: 201 },
